@@ -27,6 +27,10 @@ public class BookService {
         return mapper.toDTO(repository.save(entity));
     }
 
+    public BookDTO create(BookDTO dto) {
+        return save(dto);
+    }
+
     public List<BookDTO> findAll() {
         return repository.findAll().stream().map(mapper::toDTO).toList();
     }
