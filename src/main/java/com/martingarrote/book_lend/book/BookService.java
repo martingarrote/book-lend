@@ -16,8 +16,12 @@ public class BookService {
     private final BookMapper mapper = BookMapper.INSTANCE;
 
     @Transactional
-    private BookDTO save(BookDTO dto) {
+    private BookDTO save(BookDTO dto, boolean isNew) {
         Book entity = mapper.toEntity(dto);
+
+        if (isNew) {
+            entity.setAvailable(true);
+        }
 
         if (repository.existsByIsbn(entity.getIsbn())) {
             // custom exceptions and handlers will be added later
@@ -28,7 +32,7 @@ public class BookService {
     }
 
     public BookDTO create(BookDTO dto) {
-        return save(dto);
+        return save(dto, true);
     }
 
     public List<BookDTO> findAll() {
