@@ -27,11 +27,11 @@ public class BookService {
         return mapper.toDTO(repository.save(entity));
     }
 
-    private List<BookDTO> findAll() {
+    public List<BookDTO> findAll() {
         return repository.findAll().stream().map(mapper::toDTO).toList();
     }
 
-    private BookDTO findById(Long id) {
+    public BookDTO findById(Long id) {
         return repository.findById(id)
                 .map(mapper::toDTO)
                 // will be changed to custom exception
