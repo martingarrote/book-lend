@@ -1,12 +1,12 @@
 package com.martingarrote.book_lend.book;
 
+import com.martingarrote.book_lend.book.dto.BookDTO;
 import com.martingarrote.book_lend.mapper.BookMapper;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor

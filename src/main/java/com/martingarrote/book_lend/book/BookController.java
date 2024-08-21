@@ -1,5 +1,6 @@
 package com.martingarrote.book_lend.book;
 
+import com.martingarrote.book_lend.book.dto.BookDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

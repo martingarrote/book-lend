@@ -1,7 +1,7 @@
 package com.martingarrote.book_lend.mapper;
 
 import com.martingarrote.book_lend.book.Book;
-import com.martingarrote.book_lend.book.BookDTO;
+import com.martingarrote.book_lend.book.dto.BookDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

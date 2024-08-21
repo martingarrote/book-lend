@@ -1,4 +1,4 @@
-package com.martingarrote.book_lend.book;
+package com.martingarrote.book_lend.book.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
