@@ -32,9 +32,9 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.OK).body(service.findById(id));
     }
 
-    @PutMapping
-    public ResponseEntity<BookDTO> update(@RequestBody BookUpdateDTO updateDTO) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.update(updateDTO));
+    @PutMapping("/{id}")
+    public ResponseEntity<BookDTO> update(@PathVariable Long id, @RequestBody BookUpdateDTO updateDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.update(id, updateDTO));
     }
 
 }
