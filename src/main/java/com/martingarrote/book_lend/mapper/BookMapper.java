@@ -12,8 +12,8 @@ public interface BookMapper {
     BookMapper INSTANCE = Mappers.getMapper(BookMapper.class);
 
     BookDTO toDTO(Book book);
-    BookDTO toDTO(BookUpdateDTO updateDTO);
-    BookDTO toDTO(BookPatchDTO patchDTO);
 
     Book toEntity(BookDTO bookDTO);
+    Book toEntity(BookUpdateDTO updateDTO);
+    Book toEntity(BookPatchDTO patchDTO);
 }

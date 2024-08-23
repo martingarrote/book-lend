@@ -18,37 +18,25 @@ public class BookService {
     private final BookMapper mapper = BookMapper.INSTANCE;
 
     @Transactional
-    private BookDTO save(BookDTO dto, boolean isNew, boolean isPatch) {
-        Book entity = mapper.toEntity(dto);
-
-        if (isNew) {
-            entity.setAvailable(true);
+    private BookDTO save(Long id, Book book, boolean isPut) {
+        if (id == null) {
+            book.setAvailable(true);
         }
 
-        if (repository.existsByIsbn(entity.getIsbn()) && (isNew || isPatch)) {
-            // custom exceptions and handlers will be added later
-            throw new RuntimeException();
+        book.setId(id);
+
+        if (!isPut && !(book.getIsbn() == null)) {
+            if (repository.existsByIsbn(book.getIsbn())) {
+                throw new RuntimeException();
+            }
         }
 
-        return mapper.toDTO(repository.save(entity));
+        return mapper.toDTO(repository.save(book));
     }
 
     public BookDTO create(BookDTO dto) {
-        return save(dto, true, false);
+        return save(null, mapper.toEntity(dto), false);
     }
-
-    public BookDTO update(BookUpdateDTO updateDTO) {
-        Long id = updateDTO.id();
-
-        // put won't create new entities
-        if (!repository.existsById(id)) {
-            // will be changed to custom exception
-            throw new RuntimeException();
-        }
-
-        return save(mapper.toDTO(updateDTO), false, false);
-    }
-
 
     public List<BookDTO> findAll() {
         return repository.findAll().stream().map(mapper::toDTO).toList();
@@ -59,6 +47,16 @@ public class BookService {
                 .map(mapper::toDTO)
                 // will be changed to custom exception
                 .orElseThrow(RuntimeException::new);
+    }
+
+    public BookDTO update(Long id, BookUpdateDTO updateDTO) {
+        // put won't create new entities
+        if (!repository.existsById(id)) {
+            // will be changed to custom exception
+            throw new RuntimeException();
+        }
+
+        return save(id, mapper.toEntity(updateDTO), true);
     }
 
 }
