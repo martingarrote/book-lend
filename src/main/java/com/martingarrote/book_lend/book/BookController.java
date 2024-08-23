@@ -1,6 +1,7 @@
 package com.martingarrote.book_lend.book;
 
 import com.martingarrote.book_lend.book.dto.BookDTO;
+import com.martingarrote.book_lend.book.dto.BookUpdateDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,11 @@ public class BookController {
     public ResponseEntity<BookDTO> findById(@PathVariable Long id) {
 
         return ResponseEntity.status(HttpStatus.OK).body(service.findById(id));
+    }
+
+    @PutMapping
+    public ResponseEntity<BookDTO> update(@RequestBody BookUpdateDTO updateDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.update(updateDTO));
     }
 
 }
