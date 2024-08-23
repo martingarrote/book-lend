@@ -37,6 +37,19 @@ public class BookService {
         return save(dto, true, false);
     }
 
+    public BookDTO update(BookUpdateDTO updateDTO) {
+        Long id = updateDTO.id();
+
+        // put won't create new entities
+        if (!repository.existsById(id)) {
+            // will be changed to custom exception
+            throw new RuntimeException();
+        }
+
+        return save(mapper.toDTO(updateDTO), false, false);
+    }
+
+
     public List<BookDTO> findAll() {
         return repository.findAll().stream().map(mapper::toDTO).toList();
     }
