@@ -81,4 +81,12 @@ public class BookService {
         return mapper.toDTO(repository.save(book));
     }
 
+    public void delete(Long id) {
+        if (!repository.existsById(id)) {
+            throw new RuntimeException("Book not found with id: " + id);
+        }
+
+        repository.deleteById(id);
+    }
+
 }

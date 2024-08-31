@@ -43,4 +43,11 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.OK).body(service.partialUpdate(id, patchDTO));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
 }
