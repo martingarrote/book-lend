@@ -1,6 +1,7 @@
 package com.martingarrote.book_lend.book;
 
 import com.martingarrote.book_lend.book.dto.BookDTO;
+import com.martingarrote.book_lend.book.dto.BookPatchDTO;
 import com.martingarrote.book_lend.book.dto.BookUpdateDTO;
 import com.martingarrote.book_lend.mapper.BookMapper;
 import jakarta.transaction.Transactional;
@@ -17,25 +18,17 @@ public class BookService {
     private final BookRepository repository;
     private final BookMapper mapper = BookMapper.INSTANCE;
 
-    @Transactional
-    private BookDTO save(Long id, Book book, boolean isPut) {
-        if (id == null) {
-            book.setAvailable(true);
+    public BookDTO create(BookDTO dto) {
+
+        if (repository.existsByIsbn(dto.isbn())) {
+            throw new RuntimeException("ISBN already exists");
         }
 
-        book.setId(id);
+        Book book = mapper.toEntity(dto);
 
-        if (!isPut && !(book.getIsbn() == null)) {
-            if (repository.existsByIsbn(book.getIsbn())) {
-                throw new RuntimeException();
-            }
-        }
+        book.setAvailable(true);
 
         return mapper.toDTO(repository.save(book));
-    }
-
-    public BookDTO create(BookDTO dto) {
-        return save(null, mapper.toEntity(dto), false);
     }
 
     public List<BookDTO> findAll() {
@@ -45,18 +38,22 @@ public class BookService {
     public BookDTO findById(Long id) {
         return repository.findById(id)
                 .map(mapper::toDTO)
-                // will be changed to custom exception
                 .orElseThrow(RuntimeException::new);
     }
 
-    public BookDTO update(Long id, BookUpdateDTO updateDTO) {
-        // put won't create new entities
+    public BookDTO fullUpdate(Long id, BookUpdateDTO updateDTO) {
         if (!repository.existsById(id)) {
-            // will be changed to custom exception
-            throw new RuntimeException();
+            throw new RuntimeException("Book not found with id " + id);
         }
 
-        return save(id, mapper.toEntity(updateDTO), true);
+        if (repository.existsByIsbnAndIdNot(updateDTO.isbn(), id)) {
+            throw new RuntimeException("ISBN already exists");
+        }
+
+        Book book = mapper.toEntity(updateDTO);
+        book.setId(id);
+
+        return mapper.toDTO(repository.save(book));
     }
 
 }
