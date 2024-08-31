@@ -14,5 +14,5 @@ public record BookPatchDTO(
         @Size(min = 10, max = 13, message = "ISBN must be between 10 and 13 characters")
         String isbn,
 
-        boolean available
+        Boolean available
 ) {}
