@@ -38,4 +38,9 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.OK).body(service.fullUpdate(id, updateDTO));
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<BookDTO> partialUpdate(@PathVariable Long id, @RequestBody BookPatchDTO patchDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.partialUpdate(id, patchDTO));
+    }
+
 }

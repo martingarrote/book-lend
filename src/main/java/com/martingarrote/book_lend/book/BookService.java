@@ -56,4 +56,29 @@ public class BookService {
         return mapper.toDTO(repository.save(book));
     }
 
+    public BookDTO partialUpdate(Long id, BookPatchDTO patchDTO) {
+        Book book = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Not found"));
+
+        if (patchDTO.title() != null) {
+            book.setTitle(patchDTO.title());
+        }
+        if (patchDTO.author() != null) {
+            book.setAuthor(patchDTO.author());
+        }
+        if (patchDTO.isbn() != null) {
+
+            if (repository.existsByIsbn(patchDTO.isbn())) {
+                throw new RuntimeException("ISBN already exists");
+            }
+
+            book.setIsbn(patchDTO.isbn());
+        }
+        if (patchDTO.available() != null) {
+            book.setAvailable(patchDTO.available());
+        }
+
+        return mapper.toDTO(repository.save(book));
+    }
+
 }
