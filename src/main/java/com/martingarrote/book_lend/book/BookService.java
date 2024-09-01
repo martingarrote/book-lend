@@ -39,6 +39,13 @@ public class BookService {
                 .orElseThrow(RuntimeException::new);
     }
 
+    public List<BookDTO> search(String title, String author, String isbn, Boolean available) {
+        return repository.search(title, author, isbn, available)
+                .stream()
+                .map(mapper::toDTO)
+                .toList();
+    }
+
     public BookDTO fullUpdate(Long id, BookUpdateDTO updateDTO) {
         if (!repository.existsById(id)) {
             throw new RuntimeException("Book not found with id " + id);

@@ -33,6 +33,16 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.OK).body(service.findById(id));
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<BookDTO>> search(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String author,
+            @RequestParam(required = false) String isbn,
+            @RequestParam(required = false) Boolean available) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(service.search(title, author, isbn, available));
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<BookDTO> fullUpdate(@PathVariable Long id, @RequestBody BookUpdateDTO updateDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(service.fullUpdate(id, updateDTO));
