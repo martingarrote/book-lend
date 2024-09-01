@@ -4,9 +4,7 @@ import com.martingarrote.book_lend.book.dto.BookDTO;
 import com.martingarrote.book_lend.book.dto.BookPatchDTO;
 import com.martingarrote.book_lend.book.dto.BookUpdateDTO;
 import com.martingarrote.book_lend.mapper.BookMapper;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
