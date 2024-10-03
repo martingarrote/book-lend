@@ -3,6 +3,7 @@ package com.martingarrote.book_lend.book;
 import com.martingarrote.book_lend.book.dto.BookDTO;
 import com.martingarrote.book_lend.book.dto.BookPatchDTO;
 import com.martingarrote.book_lend.book.dto.BookUpdateDTO;
+import com.martingarrote.book_lend.mapper.common.PageDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,13 +35,15 @@ public class BookController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<BookDTO>> search(
+    public ResponseEntity<PageDTO<BookDTO>> search(
             @RequestParam(required = false) String title,
             @RequestParam(required = false) String author,
             @RequestParam(required = false) String isbn,
-            @RequestParam(required = false) Boolean available) {
+            @RequestParam(required = false) Boolean available,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
 
-        return ResponseEntity.status(HttpStatus.OK).body(service.search(title, author, isbn, available));
+        return ResponseEntity.status(HttpStatus.OK).body(service.search(title, author, isbn, available, page, size));
     }
 
     @PutMapping("/{id}")

@@ -4,7 +4,11 @@ import com.martingarrote.book_lend.book.dto.BookDTO;
 import com.martingarrote.book_lend.book.dto.BookPatchDTO;
 import com.martingarrote.book_lend.book.dto.BookUpdateDTO;
 import com.martingarrote.book_lend.mapper.BookMapper;
+import com.martingarrote.book_lend.mapper.common.PageDTO;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,11 +43,16 @@ public class BookService {
                 .orElseThrow(RuntimeException::new);
     }
 
-    public List<BookDTO> search(String title, String author, String isbn, Boolean available) {
-        return repository.search(title, author, isbn, available)
-                .stream()
-                .map(mapper::toDTO)
-                .toList();
+    public PageDTO<BookDTO> search(String title, String author, String isbn, Boolean available, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Book> result = repository.search(title, author, isbn, available, pageable);
+
+        return new PageDTO<>(
+                result.getContent().stream().map(mapper::toDTO).toList(),
+                result.getNumber(),
+                result.getSize(),
+                result.getNumberOfElements()
+        );
     }
 
     public BookDTO fullUpdate(Long id, BookUpdateDTO updateDTO) {
