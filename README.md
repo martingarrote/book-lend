@@ -16,7 +16,7 @@ Lista das ferramentas necessárias para instalação e execução do projeto:
     - Docker Compose
     - Imagem do PostgreSQL
 
-## Instalação
+## Instalação e Execução
 
 1. Clone o repositório
 
@@ -47,3 +47,32 @@ mvn clean install
 ```bash
 mvn spring-boot:run
 ```
+
+## Objetivos
+
+A realização deste projeto surge em resposta ao estudo teórico que foi realizado sobre diversos assuntos, em especial para aplicar autenticação e autorização com Spring Security, para avançar em outros conhecimentos anteriores e também para obtenção de novos com o surgimento de problemas e dúvidas durante o desenvolvimento.
+
+Tem como ideia central prover uma API utilizável para um sistema de gestão de empréstimos de livros, deste modo, tem como objetivo dispor das principais funcionalidades necessárias para isso, destacam-se:
+- Criação de conta e login;
+- Listagem e filtragem de livros, com uso de paginação;
+- Realização de empréstimos;
+- Listagem de empréstimos com filtragem e paginação.
+
+## Visão Geral do Projeto
+
+### Tecnologias Utilizadas
+
+- Java 17
+- Maven
+- Spring Boot
+  - Spring Web
+  - Spring Data JPA
+  - Spring Security
+  - Spring Validation
+- MapStruct
+- Flyway
+- PostgreSQL
+- H2 Database
+- Lombok
+- Spring Boot DevTools
+
