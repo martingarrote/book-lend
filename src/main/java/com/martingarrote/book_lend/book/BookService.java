@@ -51,7 +51,8 @@ public class BookService {
                 result.getContent().stream().map(mapper::toDTO).toList(),
                 result.getNumber(),
                 result.getSize(),
-                result.getNumberOfElements()
+                result.getTotalElements(),
+                result.getTotalPages()
         );
     }
 
